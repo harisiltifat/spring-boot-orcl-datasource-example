@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.tiagomac.authentication.UserPermissionEvaluator;
 import com.github.tiagomac.domain.Person;
 import com.github.tiagomac.services.PersonService;
 
@@ -20,6 +21,9 @@ public class PersonResource {
 	@Autowired
 	private PersonService service;
 	
+    @Autowired
+    UserPermissionEvaluator userPermissionEvaluator;
+	
 	@PostMapping("/person")
 	public ResponseEntity<Person> insert(@RequestBody Person person) {
 		return ResponseEntity.ok(service.insert(person));
@@ -27,7 +31,12 @@ public class PersonResource {
 	
 	@GetMapping("/person")
 	public HttpEntity<Page<Person>> findAll(@PageableDefault Pageable pageable){
-		return ResponseEntity.ok(service.findAll(pageable));
+		if(userPermissionEvaluator.checkUserRole("migpool"))
+			return ResponseEntity.ok(service.findAll(pageable));
+		else
+			System.out.println("findAll method--------------------- role not found");
+		
+		return null;
 	}
 
 }
