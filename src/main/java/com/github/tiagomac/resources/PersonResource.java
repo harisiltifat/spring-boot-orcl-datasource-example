@@ -34,9 +34,8 @@ public class PersonResource {
 		if(userPermissionEvaluator.checkUserRole("migpool"))
 			return ResponseEntity.ok(service.findAll(pageable));
 		else
-			System.out.println("findAll method--------------------- role not found");
-		
-		return null;
+			throw new RuntimeException("findAll method--------------------- role not found");
+	
 	}
 
 }
