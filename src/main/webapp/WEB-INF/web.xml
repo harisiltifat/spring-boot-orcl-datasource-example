@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="TransformRest" version="3.0">
+	
+	<display-name>migtest</display-name>
+		
+	<security-constraint>
+		<display-name>Restrict access</display-name>
+		
+		<web-resource-collection>
+			<web-resource-name>constraint</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+
+		<auth-constraint>
+			<role-name>migpool</role-name>
+			<role-name>vip</role-name>
+		</auth-constraint>
+		
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+	
+
+	<login-config> 
+		<auth-method>BASIC</auth-method>
+	</login-config> 
+	
+	<security-role>
+		<role-name>migpool</role-name>
+	</security-role>
+	<security-role>
+		<role-name>vip</role-name>
+	</security-role>
+	
+</web-app>
